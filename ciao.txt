@@ -1,8 +1,8 @@
 CLASS: Simulazione
-si occupa di tutto cio che e la parte grafica, e di gestire la simulazione in generale, ad esempio farla cominciare,e vedere quando finisce.
+si occupa di tutto ciò che è la parte grafica, e di gestire la simulazione in generale, ad esempio farla cominciare,e vedere quando finisce.
 
 CLASS: Ambiente
-Un ambiente e il posto dove gli individui della simulazione vivono e si spostano.
+Un ambiente è il posto dove gli individui della simulazione vivono e si spostano.
 
 INTERFACE: Strategia
 Interfaccia da cui derivano le varie strategie che saranno classi
