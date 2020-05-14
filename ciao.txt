@@ -8,7 +8,7 @@ INTERFACE: Strategia
 Interfaccia da cui derivano le varie strategie che saranno classi
 
 CLASS: Individuo
-l'individuo della simulazione, contiene uno stato interno che descrive posizione stato di salute ecc.
+l'individuo del progetto, contiene uno stato interno che descrive posizione stato di salute ecc.
 
 CLASS: Virus
 Descrive un particolare virus/malattia, generalizzare permette di testare la simulazione con tipi di virus diversi.
