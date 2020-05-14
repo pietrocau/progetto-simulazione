@@ -1,3 +1,3 @@
 public interface Strategia {
-    public void applica();
+    void applica();
 }
