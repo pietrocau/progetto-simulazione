@@ -38,14 +38,35 @@ public class Ambiente {
         drawIndividui(g2d);
     }
 
+    public void update(){
+        updateIndividui();
+    }
+
     private void drawIndividui(Graphics2D g2d){
-       for(Individuo ind : individui){
-           ind.draw(g2d);
-       }
+        for(Individuo individuo : individui){
+            individuo.draw(g2d);
+        }
+    }
+
+    private void updateIndividui(){
+        for(Individuo individuo : individui){
+            individuo.update();
+        }
     }
 
     public Ambiente(String nome,int risorse, float posX, float posY, float larghezza, float altezza){ //overloading costruttore senza scala
         this(nome,risorse, posX, posY, larghezza,altezza,1);
+    }
+
+
+    //aumenta di n la quantità di risorse dell'ambiente
+    public void guadagnaRisorse(int n){
+        risorse += n;
+    }
+
+    //riduce di n la quantità di risorse dell'ambiente
+    public void spendiRisorse(int n){
+        risorse -= n;
     }
 
     public void aggiungiIndividuo(Individuo individuo){
@@ -58,6 +79,14 @@ public class Ambiente {
 
     public String getNome() {
         return nome;
+    }
+
+    public float getPosX() {
+        return posX;
+    }
+
+    public float getPosY() {
+        return posY;
     }
 
     public float getLarghezza() {
