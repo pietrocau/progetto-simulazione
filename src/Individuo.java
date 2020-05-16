@@ -60,7 +60,8 @@ public class Individuo {
     public static Color getColore(int stato) throws IllegalArgumentException{  //restituisce il colore di un individuo in base al suo stato
         if(stato<0||stato>5) throw new IllegalArgumentException();
         return COLORI[stato];
-      
+    }
+    
     public int getId() {
         return id;
     }
