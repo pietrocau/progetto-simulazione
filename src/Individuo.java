@@ -46,15 +46,15 @@ public class Individuo {
         g2d.draw(shape);
     }
 
-    public void update() {
+    public void update() {  //chiamato ripetutamente ogni frame
         if (inMovimento) {
             posX += Individuo.VELOCITA * dirX;
             posY += Individuo.VELOCITA * dirY;
         }
     }
 
-    public void produciRisorse() {   //metodo chiamato 1 volta al giorno se l'individuo si muove
-        ambiente.guadagnaRisorse(1);
+    public void consumaRisorse() {   //metodo chiamato 1 volta al giorno se l'individuo si muove
+        ambiente.spendiRisorse(1);
     }
 
     public static Color getColore(int stato) throws IllegalArgumentException {  //restituisce il colore di un individuo in base al suo stato
