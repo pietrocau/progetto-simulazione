@@ -28,6 +28,10 @@ public class Ambiente {
         this.individui = new ArrayList<>();
     }
 
+    public Ambiente(String nome,int risorse, float posX, float posY, float larghezza, float altezza){ //overloading costruttore senza scala
+        this(nome,risorse, posX, posY, larghezza,altezza,1);
+    }
+
     public void draw(Graphics2D g2d){
         Shape shape = new Rectangle2D.Float(posX,posY,larghezza,altezza);
         g2d.setColor(new Color(242,242,242));
@@ -54,11 +58,6 @@ public class Ambiente {
         }
     }
 
-    public Ambiente(String nome,int risorse, float posX, float posY, float larghezza, float altezza){ //overloading costruttore senza scala
-        this(nome,risorse, posX, posY, larghezza,altezza,1);
-    }
-
-
     //aumenta di n la quantità di risorse dell'ambiente
     public void guadagnaRisorse(int n){
         risorse += n;
@@ -75,6 +74,21 @@ public class Ambiente {
 
     public  void rimuoviIndividuo(Individuo individuo){
         individui.remove(individuo);
+    }
+
+    public float[] getPosRandom(){ //restitusce un'array contente due float, all'indice 0 la coordinata x, all'indice 1 la coordinata y
+        float[] c = {1f};
+        return c;
+    }
+
+    public float[] getDirRandom(){  //restitusce un'array contente due float, all'indice 0 la direzione x, all'indice 1 la direzione y
+        double x = Math.PI*2;
+        float[] c = {1f};
+        return c;
+    }
+
+    public boolean spazioLibero(float x, float y){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
+        return true;
     }
 
     public String getNome() {

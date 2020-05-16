@@ -11,7 +11,7 @@ public class Individuo {
     private float posY;                 //posizione dell'individuo nell'ambiente sull'asse y
     private float dirX;                 //componente x della direzione in cui si muove l'individuo
     private float dirY;                 //componente y della direzione in cui si muove l'individuo
-    private boolean inMovimento=true;   //indica se l'individuo può muoversi o meno
+    private boolean inMovimento = true;   //indica se l'individuo può muoversi o meno
 
     //possibili stati dell'individuo
     public static final int SANO = 0;           //individuo sano (non ha mai avuto il virus, negativo al tampone)
@@ -23,14 +23,14 @@ public class Individuo {
 
     public static float VELOCITA = 5;   //velocità a cui si muove un individuo
     public static final float SIZE = 10;        //diametro in pixel del cerchio rappresentante l'individuo
-    public static final Color VERDE = new Color(39,174,96);
-    public static final Color GIALLO = new Color(242,201,76);
-    public static final Color ROSSO = new Color(235,87,87);
-    public static final Color BLU = new Color(45,156,219);
-    public static final Color NERO = new Color(130,130,130);
-    public static final Color[] COLORI = {VERDE,VERDE,GIALLO,ROSSO,BLU,NERO}; //in questa array le posizioni dei colori corrispondo alle costanti rapprententanti lo stato dell'individuo
+    public static final Color VERDE = new Color(39, 174, 96);
+    public static final Color GIALLO = new Color(242, 201, 76);
+    public static final Color ROSSO = new Color(235, 87, 87);
+    public static final Color BLU = new Color(45, 156, 219);
+    public static final Color NERO = new Color(130, 130, 130);
+    public static final Color[] COLORI = {VERDE, VERDE, GIALLO, ROSSO, BLU, NERO}; //in questa array le posizioni dei colori corrispondo alle costanti rapprententanti lo stato dell'individuo
 
-    public Individuo (int id, Ambiente ambiente, float posX, float posY, float dirX, float dirY){ //costruttore individuo
+    public Individuo(int id, Ambiente ambiente, float posX, float posY, float dirX, float dirY) { //costruttore individuo
         this.id = id;
         this.ambiente = ambiente;
         this.posX = posX;
@@ -39,29 +39,29 @@ public class Individuo {
         this.dirY = dirY;
     }
 
-    public void draw(Graphics2D g2d){  //disegna il cerchio dell'individuo in g2d
-        Shape shape = new Ellipse2D.Float(posX+ambiente.getPosX(),posY+ambiente.getPosY(),Individuo.SIZE,Individuo.SIZE); //un cerchio di diametro size
+    public void draw(Graphics2D g2d) {  //disegna il cerchio dell'individuo in g2d
+        Shape shape = new Ellipse2D.Float(posX + ambiente.getPosX(), posY + ambiente.getPosY(), Individuo.SIZE, Individuo.SIZE); //un cerchio di diametro size
         g2d.setColor(getColore(stato)); //ottengo il colore da dare al cerchio
         g2d.fill(shape);
         g2d.draw(shape);
     }
 
-    public void update(){
-        if(inMovimento){
-            posX += Individuo.VELOCITA*dirX;
-            posY += Individuo.VELOCITA*dirY;
+    public void update() {  //chiamato ripetutamente ogni frame
+        if (inMovimento) {
+            posX += Individuo.VELOCITA * dirX;
+            posY += Individuo.VELOCITA * dirY;
         }
     }
 
-    public void produciRisorse(){   //metodo chiamato 1 volta al giorno se l'individuo si muove
-        ambiente.guadagnaRisorse(1);
+    public void consumaRisorse() {   //metodo chiamato 1 volta al giorno se l'individuo si muove
+        ambiente.spendiRisorse(1);
     }
 
-    public static Color getColore(int stato) throws IllegalArgumentException{  //restituisce il colore di un individuo in base al suo stato
-        if(stato<0||stato>5) throw new IllegalArgumentException();
+    public static Color getColore(int stato) throws IllegalArgumentException {  //restituisce il colore di un individuo in base al suo stato
+        if (stato < 0 || stato > 5) throw new IllegalArgumentException();
         return COLORI[stato];
     }
-    
+
     public int getId() {
         return id;
     }
@@ -86,7 +86,7 @@ public class Individuo {
         return ambiente;
     }
 
-    public void setAmbiente (Ambiente nuovoAmbiente) {
+    public void setAmbiente(Ambiente nuovoAmbiente) {
         this.ambiente = nuovoAmbiente;
     }
 }

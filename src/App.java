@@ -24,7 +24,7 @@ public class App extends JFrame{
         timer.schedule(updateTask,0,(1000/FPS));
     }
 
-    private void update(){
+    private void update(){ //chiamato ripetutamente ogni frame
         System.out.println("updated");
         simulazione.updateSimulazione();
     }
