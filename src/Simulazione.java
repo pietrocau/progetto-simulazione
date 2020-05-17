@@ -12,7 +12,7 @@ public class Simulazione extends JComponent {
     public Simulazione(){ //costruttore simulazione
         ambiente = new Ambiente("",1000,0,0,100,100);
         ambiente1 = new Ambiente("",1000,200,0,100,100);
-        ambiente.aggiungiIndividuo(new Individuo(0,ambiente,50,50,1,0));
+        ambiente.aggiungiIndividuo(new Individuo(0,ambiente,0,0,1,0));
         ambiente1.aggiungiIndividuo(new Individuo(1,ambiente1,50,50,0,1));
         //ambiente.aggiungiIndividuo(new Individuo(2,ambiente,300,300,-1,0));
     }
