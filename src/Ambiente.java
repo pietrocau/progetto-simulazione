@@ -88,19 +88,17 @@ public class Ambiente {
     }
 
     public float[] getDirRandom(){  //restitusce un'array contente due float, all'indice 0 la direzione x, all'indice 1 la direzione y
-        float x;
-        float y;
-        double x1;
-        double y1;
+        double x;
+        double y;
         double p = Math.PI*2;
-        float[] DirRand = new float[2];
-        x = (float)(Math.random()*p);
-        y = (float)(Math.random()*p);
-        x1 = Math.cos(x);
-        y1 = Math.sin(y);
-        x1 = DirRand[0];
-        y1 = DirRand[1];
-        return DirRand;
+        float[] dirRand = new float[2];
+        x = Math.random()*p;
+        y = Math.random()*p;
+        x = Math.cos(x);
+        y = Math.sin(y);
+		dirRand[0] = (float)x;
+		dirRand[1] = (float)y;	
+        return dirRand;
     }
 
     public boolean spazioLibero(float x, float y){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
