@@ -29,6 +29,18 @@ public class Vettore {
 		return new Vettore(x/l,y/l);
 	}
 
+	public Vettore inverso(){
+		return new Vettore(-x,-y);
+	}
+
+	public Vettore meno(Vettore v){
+		return this.piu(v.inverso());
+	}
+
+	public float distanza(Vettore v){
+		return (this.meno(v)).lunghezza();
+	}
+
 	public String toString(){
 		return "("+x+","+y+")";
 	}

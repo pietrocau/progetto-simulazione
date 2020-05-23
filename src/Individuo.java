@@ -7,10 +7,8 @@ public class Individuo {
     private int stato = Individuo.SANO; //numero rappresentante lo stato di salute dell'individuo (vedi sotto)
     private float decorsoMalattia;      //(numero da 0 a 1) indica a che punto nel decorso della malattia si trova l'individuo (0 = sano, 1 = guarito/morto)
     private Ambiente ambiente;          //ambiente in cui l'individuo si trova attualmente
-    private float posX;                 //posizione dell'indiviudo (centro) nell'ambiente sull'asse x
-    private float posY;                 //posizione dell'individuo (centro) nell'ambiente sull'asse y
-    private float dirX;                 //componente x della direzione in cui si muove l'individuo
-    private float dirY;                 //componente y della direzione in cui si muove l'individuo
+    private Vettore pos;
+    private Vettore dir;
     private boolean inMovimento = true;   //indica se l'individuo si stà muovendo meno
 
     //possibili stati dell'individuo
@@ -30,26 +28,24 @@ public class Individuo {
     public static final Color NERO = new Color(130, 130, 130);
     public static final Color[] COLORI = {VERDE, VERDE, GIALLO, ROSSO, BLU, NERO}; //in questa array le posizioni dei colori corrispondo alle costanti rapprententanti lo stato dell'individuo
 
-    public Individuo(int id, Ambiente ambiente, float posX, float posY, float dirX, float dirY) { //costruttore individuo
+    public Individuo(int id, Ambiente ambiente, Vettore pos, Vettore dir) { //costruttore individuo
         this.id = id;
         this.ambiente = ambiente;
-        this.posX = posX;
-        this.posY = posY;
-        this.dirX = dirX;
-        this.dirY = dirY;
+        this.pos = pos;
+        this.dir = dir;
     }
 
     public void draw(Graphics2D g2d) {  //disegna il cerchio dell'individuo in g2d
-        Shape shape = new Ellipse2D.Float(posX + ambiente.getPosX()-(Individuo.SIZE/2), posY + ambiente.getPosY()-(Individuo.SIZE/2), Individuo.SIZE, Individuo.SIZE); //un cerchio di diametro size
+        Shape shape = new Ellipse2D.Float(pos.x + ambiente.getPosX()-(Individuo.SIZE/2), pos.y + ambiente.getPosY()-(Individuo.SIZE/2), Individuo.SIZE, Individuo.SIZE); //un cerchio di diametro size
         g2d.setColor(getColore(stato)); //ottengo il colore da dare al cerchio
         g2d.fill(shape);
         g2d.draw(shape);
     }
 
     public void update() {  //chiamato ripetutamente ogni frame
+        //todo: controllare se è rosso stato==Individuo.SINTOMATICO
         if (inMovimento) {
-            posX += Individuo.VELOCITA * dirX;
-            posY += Individuo.VELOCITA * dirY;
+            pos = pos.piu(pos.per(Individuo.VELOCITA));
         }
     }
 
@@ -74,12 +70,8 @@ public class Individuo {
         return decorsoMalattia;
     }
 
-    public float getPosX() {
-        return posX;
-    }
-
-    public float getPosY() {
-        return posY;
+    public Vettore getPos() {
+        return pos;
     }
 
     public Ambiente getAmbiente() {
