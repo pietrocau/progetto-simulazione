@@ -119,32 +119,31 @@ public class Ambiente {
 		ambiente.ambienteRadice = this.ambienteRadice;
 	}
 
-    public float[] getPosRandom(){ //restitusce un'array contente due float, all'indice 0 la coordinata x, all'indice 1 la coordinata y
+    public Vettore getPosRandom(){ //restitusce un'array contente due float, all'indice 0 la coordinata x, all'indice 1 la coordinata y
         float x;
         float y;
-        x = (float)(Math.random()*99);
-        y = (float)(Math.random()*99);
-        float[] PosRand = new float[2];
-        x = PosRand[0];
-        y = PosRand[1];
-        return PosRand;
+        x = (float)(Math.random()*larghezza);
+        y = (float)(Math.random()*altezza);
+        return new Vettore((float) x, (float) y);
     }
 
-    public float[] getDirRandom(){  //restitusce un'array contente due float, all'indice 0 la direzione x, all'indice 1 la direzione y
+    public Vettore getDirRandom(){  //restitusce un'array contente due float, all'indice 0 la direzione x, all'indice 1 la direzione y
         double x;
         double y;
         double p = Math.PI*2;
-        float[] dirRand = new float[2];
         x = Math.random()*p;
         y = Math.random()*p;
         x = Math.cos(x);
         y = Math.sin(y);
-		dirRand[0] = (float)x;
-		dirRand[1] = (float)y;	
-        return dirRand;
+        return new Vettore((float) x, (float) y);
     }
 
-	public boolean spazioLibero(float x, float y){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
+	public boolean spazioLibero(Vettore pos){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
+		for (Individuo individuo : individui) {
+			if(pos.distanza(individuo.getPos())<Individuo.SIZE){
+				return false;
+			}
+		}
 		return true;
 	}
 
