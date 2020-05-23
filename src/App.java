@@ -25,7 +25,6 @@ public class App extends JFrame{
     }
 
     private void update(){ //chiamato ripetutamente ogni frame
-        System.out.println("updated");
         simulazione.updateSimulazione();
     }
 

@@ -131,10 +131,9 @@ public class Ambiente {
         double x;
         double y;
         double p = Math.PI*2;
-        x = Math.random()*p;
-        y = Math.random()*p;
-        x = Math.cos(x);
-        y = Math.sin(y);
+        double rand = Math.random()*p;
+        x = Math.cos(rand);
+        y = Math.sin(rand);
         return new Vettore((float) x, (float) y);
     }
 
