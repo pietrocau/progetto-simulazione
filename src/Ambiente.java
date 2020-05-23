@@ -139,7 +139,7 @@ public class Ambiente {
 
 	public boolean spazioLibero(Vettore pos){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
 		for (Individuo individuo : individui) {
-			if(pos.distanza(individuo.getPos())<Individuo.SIZE){
+			if(Vettore.distanza(pos,individuo.getPos())<Individuo.SIZE){
 				return false;
 			}
 		}

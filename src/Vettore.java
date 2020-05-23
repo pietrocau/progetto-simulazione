@@ -37,10 +37,19 @@ public class Vettore {
 		return this.piu(v.inverso());
 	}
 
-	public float distanza(Vettore v){
-		return (this.meno(v)).lunghezza();
+	public static float distanza(Vettore a,Vettore b){
+		return (a.meno(b)).lunghezza();
 	}
 
+	public static Vettore direzioneRandom(){
+        double x;
+        double y;
+        double p = Math.PI*2;
+        double rand = Math.random()*p;
+        x = Math.cos(rand);
+        y = Math.sin(rand);
+        return new Vettore((float) x, (float) y);
+	}
 	public String toString(){
 		return "("+x+","+y+")";
 	}

@@ -19,7 +19,7 @@ public class Individuo {
     public static final int IMMUNE = 4;         //individuo immune (ha avuto il virus, è guarito, non può ammalarsi di nuovo, negativo al tampone)
     public static final int MORTO = 5;          //individuo morto (ha avuto il virus, è morto, negativo al tampone)
 
-    public static float VELOCITA = 2;   //velocità a cui si muove un individuo
+    public static float VELOCITA = 1;   //velocità a cui si muove un individuo
     public static final float SIZE = 10;        //diametro in pixel del cerchio rappresentante l'individuo
     public static final Color VERDE = new Color(39, 174, 96);
     public static final Color GIALLO = new Color(242, 201, 76);
