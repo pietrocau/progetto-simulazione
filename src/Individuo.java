@@ -44,12 +44,37 @@ public class Individuo {
 
     public void update() {  //chiamato ripetutamente ogni frame
         //todo: controllare se è rosso stato==Individuo.SINTOMATICO
+
+        if (stato == Individuo.MORTO) {
+            inMovimento = false;
+        }
+
+        if (stato == Individuo.SINTOMATICO) {
+            inMovimento = false;
+        }
+
+        if (stato == Individuo.SANO) {
+            inMovimento = true;
+        }
+
+        if (stato == Individuo.INFETTO) {
+            inMovimento = true;
+        }
+
+        if (stato == Individuo.ASINTOMATICO) {
+            inMovimento = true;
+        }
+
+        if (stato == Individuo.IMMUNE) {
+            inMovimento = true;
+        }
+
         if (inMovimento) {
             pos = pos.piu(dir.per(Individuo.VELOCITA));
         }
     }
 
-    public void consumaRisorse() {   //metodo chiamato 1 volta al giorno se l'individuo si muove
+    public void consumaRisorse() {   //metodo chiamato 1 volta al giorno se l'individuo NON si muove
         ambiente.spendiRisorse(1);
     }
 
