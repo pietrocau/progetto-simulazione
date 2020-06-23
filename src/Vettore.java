@@ -41,7 +41,7 @@ public class Vettore {
 		return (a.meno(b)).lunghezza();
 	}
 
-	public static Vettore direzioneRandom(){
+	public static Vettore direzioneRandom(){ //restituisce un vettore normalizzato (cos(x)^2+sin(y)^2=1) casuale
         double x;
         double y;
         double p = Math.PI*2;
@@ -50,6 +50,15 @@ public class Vettore {
         y = Math.sin(rand);
         return new Vettore((float) x, (float) y);
 	}
+
+	//todo: complete and test
+	public boolean inRect(float x,float y,float l,float a){ //restituisce true se il vettore (inteso come posizione) è all'interno dell'rettangolo in posizione (x,y) di larghezza l e altrezza a
+		if(this.x > x && this.x < x+l && this.y > y && this.y < y+a){
+			return true;
+		}
+		return false;
+	}
+
 	public String toString(){
 		return "("+x+","+y+")";
 	}

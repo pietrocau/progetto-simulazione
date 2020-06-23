@@ -11,7 +11,7 @@ public class App extends JFrame{
 
     //costruttore dell'app
     public App(){
-        simulazione = new Simulazione();
+        simulazione = new SimulazioneTest();
         initGUI(simulazione);
         TimerTask updateTask = new TimerTask() {
             @Override
