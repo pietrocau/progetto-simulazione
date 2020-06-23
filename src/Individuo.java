@@ -36,7 +36,7 @@ public class Individuo {
     }
 
     public void draw(Graphics2D g2d) {  //disegna il cerchio dell'individuo in g2d
-        Shape shape = new Ellipse2D.Float(pos.x + ambiente.getPosX()-(Individuo.SIZE/2), pos.y + ambiente.getPosY()-(Individuo.SIZE/2), Individuo.SIZE, Individuo.SIZE); //un cerchio di diametro size
+        Shape shape = new Ellipse2D.Float(pos.x + ambiente.getPos()-(Individuo.SIZE/2), pos.y + ambiente.getPos()-(Individuo.SIZE/2), Individuo.SIZE, Individuo.SIZE); //un cerchio di diametro size
         g2d.setColor(getColore(stato)); //ottengo il colore da dare al cerchio
         g2d.fill(shape);
         g2d.draw(shape);
