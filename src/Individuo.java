@@ -9,7 +9,7 @@ public class Individuo {
     private Ambiente ambiente;          //ambiente in cui l'individuo si trova attualmente
     private Vettore pos;
     private Vettore dir;
-    private boolean inMovimento = true;   //indica se l'individuo si stà muovendo meno
+    private boolean inMovimento = true;   //indica se l'individuo si sta muovendo meno
 
     //possibili stati dell'individuo
     public static final int SANO = 0;           //individuo sano (non ha mai avuto il virus, negativo al tampone)
@@ -19,7 +19,7 @@ public class Individuo {
     public static final int IMMUNE = 4;         //individuo immune (ha avuto il virus, è guarito, non può ammalarsi di nuovo, negativo al tampone)
     public static final int MORTO = 5;          //individuo morto (ha avuto il virus, è morto, negativo al tampone)
 
-    public static float VELOCITA = 2;   //velocità a cui si muove un individuo
+    public static float VELOCITA = 1;   //velocità a cui si muove un individuo
     public static final float SIZE = 10;        //diametro in pixel del cerchio rappresentante l'individuo
     public static final Color VERDE = new Color(39, 174, 96);
     public static final Color GIALLO = new Color(242, 201, 76);
@@ -28,11 +28,8 @@ public class Individuo {
     public static final Color NERO = new Color(130, 130, 130);
     public static final Color[] COLORI = {VERDE, VERDE, GIALLO, ROSSO, BLU, NERO}; //in questa array le posizioni dei colori corrispondo alle costanti rapprententanti lo stato dell'individuo
 
-    public Individuo(int id, Ambiente ambiente, Vettore pos, Vettore dir) { //costruttore individuo
+    public Individuo(int id) { //costruttore individuo
         this.id = id;
-        this.ambiente = ambiente;
-        this.pos = pos;
-        this.dir = dir;
     }
 
     public void draw(Graphics2D g2d) {  //disegna il cerchio dell'individuo in g2d
@@ -47,10 +44,17 @@ public class Individuo {
         if (inMovimento) {
             pos = pos.piu(dir.per(Individuo.VELOCITA));
         }
+		else{
+			consumaRisorse();
+		}
     }
 
-    public void consumaRisorse() {   //metodo chiamato 1 volta al giorno se l'individuo si muove
+    public void consumaRisorse() {   //metodo chiamato 1 volta al giorno se l'individuo non	si muove
         ambiente.spendiRisorse(1);
+    }
+
+    public void infetta(){
+        this.stato = Individuo.INFETTO;
     }
 
     public static Color getColore(int stato) throws IllegalArgumentException {  //restituisce il colore di un individuo in base al suo stato
@@ -81,4 +85,12 @@ public class Individuo {
     public void setAmbiente(Ambiente nuovoAmbiente) {
         this.ambiente = nuovoAmbiente;
     }
+
+	public void setPos(Vettore pos){
+		this.pos = pos;	
+	}
+
+	public void setDir(Vettore dir){
+		this.dir = dir;
+	}
 }

@@ -7,11 +7,14 @@ public class Ambiente {
 	//Concettualmente, un ambiente è il posto dove gli individui della simulazione vivono e si spostano.
 	//una simulazione può contenere più ambienti, gli ambienti sono completamente separati e indipendenti.
 	//si può tuttavia spostare individui da un ambiente all'altro.
+	//Inoltre un ambiente può contenere altri ambienti, in tal caso, tutti gli ambienti che sono all'interno di un ambiente,
+	//o all'interno di un ambiente che è all interno di un ambiente,  e così via, condividono le risorse dell'ambiente principale
+	//che li contiene tutti.
 
 	private String nome;    //il nome dell'ambiente
-	private int risorse;    //la quantita di risorse a disposizione di un ambiente.
-	private float posX;     //la posizione sull'asse x dell'ambiente all'interno del componenete grafico della simulazione
-	private float posY;     //la posizione sull'asse y dell'ambiente all'interno del componenete grafico della simulazione
+	private int risorse;    //la quantità di risorse a disposizione di un ambiente.
+	private float posX;     //la posizione sull'asse x dell'ambiente all'interno del componente grafico della simulazione
+	private float posY;     //la posizione sull'asse y dell'ambiente all'interno del componente grafico della simulazione
 	private float larghezza;    //la larghezza (pixel) dell'ambiente
 	private float altezza;      //l'altezza (pixel) dell'ambiente
 	private ArrayList<Individuo> individui; //lista  di individui in un ambiente
@@ -108,6 +111,9 @@ public class Ambiente {
 
 	public void aggiungiIndividuo(Individuo individuo){
 		individui.add(individuo);
+		individuo.setAmbiente(this);
+		individuo.setPos(getPosRandom());
+		individuo.setDir(Vettore.direzioneRandom());
 	}
 
 	public void rimuoviIndividuo(Individuo individuo){
@@ -119,7 +125,7 @@ public class Ambiente {
 		ambiente.ambienteRadice = this.ambienteRadice;
 	}
 
-    public Vettore getPosRandom(){ //restitusce un'array contente due float, all'indice 0 la coordinata x, all'indice 1 la coordinata y
+    public Vettore getPosRandom(){ //restituisce un vettore rappresentante una posizione random all'interno di questo ambiente
         float x;
         float y;
         x = (float)(Math.random()*larghezza);
@@ -127,21 +133,16 @@ public class Ambiente {
         return new Vettore((float) x, (float) y);
     }
 
-    public Vettore getDirRandom(){  //restitusce un'array contente due float, all'indice 0 la direzione x, all'indice 1 la direzione y
-        double x;
-        double y;
-        double p = Math.PI*2;
-        double rand = Math.random()*p;
-        x = Math.cos(rand);
-        y = Math.sin(rand);
-        return new Vettore((float) x, (float) y);
-    }
 
-	public boolean spazioLibero(Vettore pos){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
-		for (Individuo individuo : individui) {
-			if(pos.distanza(individuo.getPos())<Individuo.SIZE){
+	public boolean collisione(Vettore pos){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
+		for (Individuo individuo : individui) { //controlliamo se lo spazio è occupato da qualche altro individuo
+			if(Vettore.distanza(pos,individuo.getPos())<Individuo.SIZE){
 				return false;
 			}
+		}
+		for(Ambiente ambiente : sottoambienti){
+			//todo:complete
+			//if()
 		}
 		return true;
 	}
@@ -175,6 +176,7 @@ public class Ambiente {
 	}
 
 	public boolean getCollassato(){
+		System.out.println("Ambiente collassato");
 		return collassato;
 	}
 
