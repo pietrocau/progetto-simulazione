@@ -131,10 +131,45 @@ public class Ambiente {
         return new Vettore((float) x, (float) y);
     }
 
+    private void checkCollisioniIndividuoIndividuo(){
+		for (Individuo i1 : individui) {
+			for (Individuo i2 : individui){
+				if(Vettore.distanza(i1.getPos(),i2.getPos())<Individuo.SIZE/2){
+					//collisione tra 2 individui
+				}
+			}
+		}
+	}
+
+	private void checkCollisioniIndividuoMuro(){
+		for (Individuo i : individui) {
+			Vettore p = i.getPos();
+			if(p.x <=0 || p.y >= altezza || p.y<=0 || p.y >= larghezza){
+				//collisione individuo muro
+			}
+		}
+	}
+
+	private void checkCollisioniIndividuoSottoambiente(){
+		for (Individuo i : individui) {
+			Vettore p = i.getPos();
+			for (Ambiente a : sottoambienti) {
+				Vettore ap = a.getPos();
+				float r = Individuo.SIZE/2;
+				if(p.inRect(ap,a.larghezza,a.altezza)
+						|| intersecaCerchio(ap.x,ap.y,ap.x,ap.y+a.altezza,p,r)
+						|| intersecaCerchio(ap.x+a.larghezza, ap.y, ap.x+a.larghezza,ap.y+a.altezza,p,r)
+						|| intersecaCerchio(ap.x,ap.y,ap.x+a.larghezza,ap.y,p,r)
+						|| intersecaCerchio(ap.x, ap.y+a.altezza, ap.x+a.larghezza,ap.y+a.altezza,p,r)){
+					//collisione individuo ambiente
+				}
+			}
+		}
+	}
 
 	public boolean collisione(Vettore pos){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
 		for (Individuo individuo : individui) { //controlliamo se lo spazio è occupato da qualche altro individuo
-			if(Vettore.distanza(pos,individuo.getPos())<Individuo.SIZE){
+			if(Vettore.distanza(pos,individuo.getPos())<Individuo.SIZE/2){
 				return false;
 			}
 		}
@@ -145,16 +180,26 @@ public class Ambiente {
 		return true;
 	}
 
+	//todo: funzionerà???
+	private boolean intersecaCerchio(float x1, float y1, float x2, float y2, Vettore c, float r) { //restituisce true se il il segmento che va da (x1,y1) a (x2,y2) interseca o è tangente al cerchio di centro (x,y) e raggio r
+		Vettore a = new Vettore(x1,y1);
+		Vettore b = new Vettore(x2,y2);
+		Vettore abDir = b.meno(a).direzione();
+		float t = abDir.x*(c.x-a.x) + abDir.y*(c.y-a.y);
+		Vettore e = (abDir.piu(a)).per(t);
+		float dist = Vettore.distanza(e,c);
+		if(dist <= r && (a.x <= c.x && c.x <= b.x && a.y <= c.y && c.y <= b.y)){
+			return true;
+		}
+		return false;
+	}
+
 	public String getNome() {
 		return nome;
 	}
 
-	public Vettore getPosizione() {
+	public Vettore getPos() {
 		return pos;
-	}
-
-	public Vettore getDirezione() {
-		return dir;
 	}
 
 	public float getLarghezza() {

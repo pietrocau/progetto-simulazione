@@ -7,8 +7,8 @@ public class Individuo {
     private int stato = Individuo.SANO; //numero rappresentante lo stato di salute dell'individuo (vedi sotto)
     private float decorsoMalattia;      //(numero da 0 a 1) indica a che punto nel decorso della malattia si trova l'individuo (0 = sano, 1 = guarito/morto)
     private Ambiente ambiente;          //ambiente in cui l'individuo si trova attualmente
-    private Vettore pos;
-    private Vettore dir;
+    private Vettore pos;                //posizione RELATIVA ALL'AMBIENTE dell'individuo
+    private Vettore dir;                //vettore normalizzato della direzione in cui l'individuo si sta muovendo
     private boolean inMovimento = true;   //indica se l'individuo si sta muovendo meno
 
     //possibili stati dell'individuo
@@ -33,7 +33,7 @@ public class Individuo {
     }
 
     public void draw(Graphics2D g2d) {  //disegna il cerchio dell'individuo in g2d
-        Shape shape = new Ellipse2D.Float(pos.x + ambiente.getPos()-(Individuo.SIZE/2), pos.y + ambiente.getPos()-(Individuo.SIZE/2), Individuo.SIZE, Individuo.SIZE); //un cerchio di diametro size
+        Shape shape = new Ellipse2D.Float(pos.x + ambiente.getPos().x-(Individuo.SIZE/2), pos.y + ambiente.getPos().y-(Individuo.SIZE/2), Individuo.SIZE, Individuo.SIZE); //un cerchio di diametro size
         g2d.setColor(getColore(stato)); //ottengo il colore da dare al cerchio
         g2d.fill(shape);
         g2d.draw(shape);

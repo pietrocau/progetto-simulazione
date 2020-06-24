@@ -10,7 +10,7 @@ public class SimulazioneTest extends Simulazione {
     Virus coronavirus = new Virus("covid",0,0,0,0,0,0);
 
     public SimulazioneTest(){ //costruttore simulazione
-        ambiente = new Ambiente("",1000,0,0,400,400);
+        ambiente = new Ambiente("",1000,new Vettore(),0,400,400);
         ambienti.add(ambiente); //aggiungiamo tutti gli ambienti in ambienti
 		for(int i = 0; i < 10; i++){
 			ambiente.aggiungiIndividuo(new Individuo(i));

@@ -11,6 +11,11 @@ public class App extends JFrame{
 
     //costruttore dell'app
     public App(){
+
+        //testing-----------------------------
+
+        //------------------------------------
+
         simulazione = new SimulazioneTest();
         initGUI(simulazione);
         TimerTask updateTask = new TimerTask() {
