@@ -12,9 +12,8 @@ public class Ambiente {
 	//che li contiene tutti.
 
 	private String nome;    //il nome dell'ambiente
-	private int risorse;    //la quantità di risorse a disposizione di un ambiente.
-	private float posX;     //la posizione sull'asse x dell'ambiente all'interno del componente grafico della simulazione
-	private float posY;     //la posizione sull'asse y dell'ambiente all'interno del componente grafico della simulazione
+	private int risorse;    //la quantita di risorse a disposizione di un ambiente.
+	private Vettore pos;     //
 	private float larghezza;    //la larghezza (pixel) dell'ambiente
 	private float altezza;      //l'altezza (pixel) dell'ambiente
 	private ArrayList<Individuo> individui; //lista  di individui in un ambiente
@@ -24,10 +23,9 @@ public class Ambiente {
 	private Ambiente ambienteRadice; //l'ambiente radice dell'albero di ambienti di questo ambiente
 	private boolean collassato = false;
 
-	public Ambiente(String nome,int risorse,  float posX, float posY, float larghezza, float altezza, float scala){ //costruttore ambiente
+	public Ambiente(String nome,int risorse,  Vettore pos, float larghezza, float altezza, float scala){ //costruttore ambiente
 		this.nome = nome;
-		this.posX = posX;
-		this.posY = posY;
+		this.pos = pos;
 		this.risorse = risorse;
 		this.larghezza = larghezza;
 		this.altezza = altezza;
@@ -37,12 +35,12 @@ public class Ambiente {
 		this.ambienteRadice = this;
 	}
 
-	public Ambiente(String nome,int risorse, float posX, float posY, float larghezza, float altezza){ //overloading costruttore senza scala
-		this(nome,risorse, posX, posY, larghezza,altezza,1);
+	public Ambiente(String nome,int risorse, Vettore pos, float larghezza, float altezza){ //overloading costruttore senza scala
+		this(nome,risorse, pos, larghezza,altezza,1);
 	}
 
 	public void draw(Graphics2D g2d){
-		Shape shape = new Rectangle2D.Float(posX,posY,larghezza,altezza);
+		Shape shape = new Rectangle2D.Float(pos.x, pos.y, larghezza, altezza);
 		g2d.setColor(new Color(242,242,242));
 		g2d.fill(shape);
 		g2d.setColor(new Color(0,0,0));
@@ -151,12 +149,12 @@ public class Ambiente {
 		return nome;
 	}
 
-	public float getPosX() {
-		return posX;
+	public Vettore getPosizione() {
+		return pos;
 	}
 
-	public float getPosY() {
-		return posY;
+	public Vettore getDirezione() {
+		return dir;
 	}
 
 	public float getLarghezza() {
