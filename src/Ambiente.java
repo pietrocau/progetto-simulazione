@@ -134,7 +134,7 @@ public class Ambiente {
     private void checkCollisioniIndividuoIndividuo(){
 		for (Individuo i1 : individui) {
 			for (Individuo i2 : individui){
-				if(Vettore.distanza(i1.getPos(),i2.getPos())<Individuo.SIZE/2){
+				if(Vettore.distanza(i1.getPos(),i2.getPos())<Individuo.SIZE){
 					//collisione tra 2 individui
 				}
 			}
@@ -144,7 +144,7 @@ public class Ambiente {
 	private void checkCollisioniIndividuoMuro(){
 		for (Individuo i : individui) {
 			Vettore p = i.getPos();
-			if(p.x <=0 || p.y >= altezza || p.y<=0 || p.y >= larghezza){
+			if(p.x <=0 || p.x >= larghezza || p.y<=0 || p.y >= altezza){
 				//collisione individuo muro
 			}
 		}
