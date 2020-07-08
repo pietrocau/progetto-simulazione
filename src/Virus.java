@@ -7,8 +7,9 @@ public class Virus {
     private float durata;           //il numero di giorni che intercorrono fra il momento del contagio e quello della guarigione.
     private float durataIncubazione; //(numero da 0 a 1) la percentuale della durata della malattia che deve trascorrere prima che l'individuo infetto possa diventare contagioso
     private float durataAsintomatico;     //(numero da 0 a 1) la percentuale della durata della malattia che deve trascorrere prima che l'individuo infetto possa diventare sintomatico
+    private float durataSintomi;     //(numero da 0 a 1) la percentuale della durata della malattia che deve trascorrere prima che l'individuo sintomatico muoia
 
-    public Virus(String nome, float infettivita, float sintomaticita, float letalita, float durata, float durataIncubazione, float durataAsintomatico){     //costruttore Virus
+    public Virus(String nome, float infettivita, float sintomaticita, float letalita, float durata, float durataIncubazione, float durataAsintomatico, float durataSintomi){     //costruttore Virus
         this.nome = nome;
         this.infettivita = infettivita;
         this.sintomaticita = sintomaticita;
@@ -16,6 +17,7 @@ public class Virus {
         this.durata = durata;
         this.durataIncubazione =  durataIncubazione;
         this.durataAsintomatico = durataAsintomatico;
+        this.durataSintomi = durataSintomi;
     }
 
     public String getNome() {
@@ -44,5 +46,9 @@ public class Virus {
 
     public float getDurataAsintomatico() {
         return durataAsintomatico;
+    }
+
+    public float getDurataSintomi() {
+        return durataSintomi;
     }
 }

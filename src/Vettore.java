@@ -37,8 +37,32 @@ public class Vettore {
 		return this.piu(v.inverso());
 	}
 
-	public float distanza(Vettore v){
-		return (this.meno(v)).lunghezza();
+	public boolean uguale(Vettore v){
+		if(this.x == v.x && this.y == v.y){
+			return true;
+		}
+		return false;
+	}
+
+	public static float distanza(Vettore a,Vettore b){
+		return (a.meno(b)).lunghezza();
+	}
+
+	public static Vettore direzioneRandom(){ //restituisce un vettore normalizzato (cos(x)^2+sin(y)^2=1) casuale
+        double x;
+        double y;
+        double p = Math.PI*2;
+        double rand = Math.random()*p;
+        x = Math.cos(rand);
+        y = Math.sin(rand);
+        return new Vettore((float) x, (float) y);
+	}
+
+	public boolean inRect(Vettore pos,float l,float a){ //restituisce true se il vettore (inteso come posizione) è all'interno dell'rettangolo in posizione pos (x,y) di larghezza l e altrezza a
+		if(this.x >= pos.x && this.x <= pos.x+l && this.y >= pos.y && this.y <= pos.y+a){
+			return true;
+		}
+		return false;
 	}
 
 	public String toString(){
