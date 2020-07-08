@@ -39,7 +39,7 @@ public class Ambiente {
 	}
 
 	public void draw(Graphics2D g2d){
-		Shape shape = new Rectangle2D.Float(larghezza, altezza);		//non capisco l'errore!!! + come posso passargli la posizione che è di tipo Vettore e non Float???
+		Shape shape = new Rectangle2D.Float(larghezza, altezza);
 		g2d.setColor(new Color(242,242,242));
 		g2d.fill(shape);
 		g2d.setColor(new Color(0,0,0));
