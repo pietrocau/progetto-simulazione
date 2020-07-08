@@ -54,6 +54,8 @@ public class Ambiente {
 		if(!collassato){
 			updateIndividui();
 			updateSottoambienti();
+			checkCollisioniIndividuoMuro();
+			checkCollisioniIndividuoIndividuo();
 		}
 	}
 
@@ -126,16 +128,24 @@ public class Ambiente {
     public Vettore getPosRandom(){ //restituisce un vettore rappresentante una posizione random all'interno di questo ambiente
         float x;
         float y;
-        x = (float)(Math.random()*larghezza);
-        y = (float)(Math.random()*altezza);
+        x = (float) (Individuo.SIZE/2 + (Math.random()*(larghezza-Individuo.SIZE)));
+        y = (float)(Individuo.SIZE/2 + (Math.random()*(altezza-Individuo.SIZE)));
         return new Vettore((float) x, (float) y);
     }
 
     private void checkCollisioniIndividuoIndividuo(){
 		for (Individuo i1 : individui) {
 			for (Individuo i2 : individui){
-				if(Vettore.distanza(i1.getPos(),i2.getPos())<Individuo.SIZE){
-					//collisione tra 2 individui
+				if(i1 != i2 && Vettore.distanza(i1.getPos(),i2.getPos())<Individuo.SIZE){
+					//collisione tra 2 individui from https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
+
+					//rimbalzo
+					Vettore dirAB = i2.getPos().meno(i1.getPos()).direzione();
+					i1.setDir(i1.getDir().meno(dirAB).direzione());
+					i2.setDir(i2.getDir().piu(dirAB).direzione());
+
+					checkInfetto(i1, i2);
+					checkInfetto(i2, i1);
 				}
 			}
 		}
@@ -144,8 +154,21 @@ public class Ambiente {
 	private void checkCollisioniIndividuoMuro(){
 		for (Individuo i : individui) {
 			Vettore p = i.getPos();
-			if(p.x <=0 || p.x >= larghezza || p.y<=0 || p.y >= altezza){
-				//collisione individuo muro
+			if(p.x-Individuo.SIZE/2 <= 0){
+				//i.rimbalza((float)Math.PI);
+				i.getDir().x = -i.getDir().x;
+			}
+			else if(p.x+Individuo.SIZE/2 >= larghezza){
+				//i.rimbalza(0);
+				i.getDir().x = -i.getDir().x;
+			}
+			else if(p.y-Individuo.SIZE/2 <= 0){
+				//i.rimbalza((float)Math.PI/2);
+				i.getDir().y = -i.getDir().y;
+			}
+			else if(p.y+Individuo.SIZE/2 >= altezza){
+				//i.rimbalza((float)(3*Math.PI/4));
+				i.getDir().y = -i.getDir().y;
 			}
 		}
 	}
@@ -163,6 +186,15 @@ public class Ambiente {
 						|| intersecaCerchio(ap.x, ap.y+a.altezza, ap.x+a.larghezza,ap.y+a.altezza,p,r)){
 					//collisione individuo ambiente
 				}
+			}
+		}
+	}
+
+	private void checkInfetto(Individuo i1, Individuo i2){ //decide se l'individuo i1 infetta l'individuo i2
+		if(i1.getStato() == Individuo.SINTOMATICO || i1.getStato() == Individuo.ASINTOMATICO && i2.getStato() == Individuo.SANO){
+			float rnd = (float) Math.random();
+			if(rnd<i1.getVirus().getInfettivita()){
+				i2.infetta(i1.getVirus());
 			}
 		}
 	}
@@ -223,4 +255,7 @@ public class Ambiente {
 		return collassato;
 	}
 
+	public int getRisorse(){
+		return this.risorse;
+	}
 }

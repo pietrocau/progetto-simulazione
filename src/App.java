@@ -27,6 +27,8 @@ public class App extends JFrame{
         final int FPS = 30;  //numero di update al secondo
         Timer timer = new Timer();
         timer.schedule(updateTask,0,(1000/FPS));
+
+        simulazione.infettaIndividuoRandom();
     }
 
     private void update(){ //chiamato ripetutamente ogni frame
