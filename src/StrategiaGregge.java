@@ -14,5 +14,6 @@ public class StrategiaGregge implements Strategia {
 
     @Override
     public void applica() {
+        System.out.println("La strategia immunità di gregge è stata applicata. Con essa continua il normale svolgimento della vita quotidiana senza restrizioni o quant' altro");
     }
 }
