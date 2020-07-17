@@ -16,6 +16,7 @@ public class Individuo {
     private boolean bloccato = false;    //true se l'individuo stato bloccato per seguire la strategia
     private boolean checkSintomatico = false; //indica se l'individuo è già stato sottoposto alla probabilità di presentare sintomi
     private boolean checkMorto = false; //indica se l'individuo è già stato sottoposto alla probabilità di morire
+    private boolean isPazienteZero = false; //indica se l'individuo è il primo infetto dal virus
 
     //possibili stati dell'individuo
     public static final int SANO = 0;           //individuo sano (non ha mai avuto il virus, negativo al tampone)
@@ -34,7 +35,6 @@ public class Individuo {
     public static final Color NERO = new Color(130, 130, 130);
     public static final Color[] COLORI = {VERDE, VERDE, GIALLO, ROSSO, BLU, NERO}; //in questa array le posizioni dei colori corrispondo alle costanti rapprententanti lo stato dell'individuo
 
-    public ArrayList<Contatto> contatti = new ArrayList<Contatto>(); //lista di contatti che l'individuo ha avuto
     private Virus virus;    //il virus con cui l'individuo è o è stato infettato
 
     public Individuo(int id) { //costruttore individuo
@@ -59,19 +59,19 @@ public class Individuo {
         if (inMovimento) {
             pos = pos.piu(dir.per(Individuo.VELOCITA)); //spostiamo l'individuo
         }
-		else if(stato!=Individuo.MORTO){    //i morti non consumano risorse
+		else if(stato!=Individuo.MORTO && Simulazione.frame%Simulazione.fxGiorno==0){    //i morti non consumano risorse
 			consumaRisorse();
 		}
 
 		if(virus!=null && decorsoMalattia < 1){
             decorsoMalattia = (Simulazione.giorno-giornoInfezione)/virus.getDurata();
-            if(decorsoMalattia>=virus.getDurataSintomi()){
+            if(decorsoMalattia>=virus.getDurataSintomi() && !checkMorto){
                 checkMorto();
             }
-            else if(decorsoMalattia>=virus.getDurataAsintomatico()){
+            else if(decorsoMalattia>=virus.getDurataAsintomatico() && !checkSintomatico){
                 checkSintomatico();
             }
-            else if(decorsoMalattia>=virus.getDurataIncubazione()){
+            else if(decorsoMalattia>=virus.getDurataIncubazione() && !checkSintomatico){
                 this.stato = Individuo.ASINTOMATICO;
             }
         }
@@ -83,7 +83,7 @@ public class Individuo {
     private void checkSintomatico(){
         checkSintomatico = true;
         float rnd = (float) Math.random();
-        if(rnd<virus.getSintomaticita()){
+        if(rnd<virus.getSintomaticita() || isPazienteZero){
             this.stato = Individuo.SINTOMATICO;
         }
     }
@@ -91,8 +91,6 @@ public class Individuo {
     private void checkMorto(){
         checkMorto = true;
         float rnd = (float) Math.random();
-        System.out.println(rnd);
-        System.out.println(virus.getLetalita());
         if(rnd<virus.getLetalita()){
             this.stato = Individuo.MORTO;
             decorsoMalattia = 1;
@@ -173,5 +171,9 @@ public class Individuo {
 
     public Virus getVirus() {
         return virus;
+    }
+
+    public void setPazienteZero(boolean pazienteZero) {
+        isPazienteZero = pazienteZero;
     }
 }

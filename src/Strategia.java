@@ -25,15 +25,16 @@ public interface Strategia {
     void applica(); //chiamato ogni frame dell'applicazione, quando la strategia è in atto
     void comincia();// chiamato una sola volta all'inizio della strategia (serve??)
 
-    private boolean tampone(Individuo individuo) throws IllegalArgumentException{
-            individuo.getAmbiente().spendiRisorse(1); //todo: numero di risorse per il tampone
-            int s = individuo.getStato();
-            if(s == Individuo.ASINTOMATICO || s == Individuo.SINTOMATICO || s == Individuo.SINTOMATICO){
-                return true;
-            }
-            return false;
+    default boolean tampone(Individuo individuo){
+        individuo.getAmbiente().spendiRisorse(10);
+        int s = individuo.getStato();
+        if(s == Individuo.ASINTOMATICO || s == Individuo.SINTOMATICO){
+            return true;
+        }
+        return false;
     }
 
+    public void setSim(Simulazione sim);
 
 
 }

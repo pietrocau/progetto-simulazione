@@ -23,20 +23,18 @@ public class Ambiente {
 	private Ambiente ambienteRadice; //l'ambiente radice dell'albero di ambienti di questo ambiente
 	private boolean collassato = false;
 
-	public Ambiente(String nome,int risorse,  Vettore pos, float larghezza, float altezza, float scala){ //costruttore ambiente
+	public Ambiente(String nome,int risorse, int nIndividui,  Vettore pos, float larghezza, float altezza){ //costruttore ambiente
 		this.nome = nome;
 		this.pos = pos;
 		this.risorse = risorse;
 		this.larghezza = larghezza;
 		this.altezza = altezza;
-		this.scala = scala;
 		this.individui = new ArrayList<>();
 		this.sottoambienti = new ArrayList<>();
 		this.ambienteRadice = this;
-	}
-
-	public Ambiente(String nome,int risorse, Vettore pos, float larghezza, float altezza){ //overloading costruttore senza scala
-		this(nome,risorse, pos, larghezza,altezza,1);
+		for (int i = 0; i < nIndividui; i++) {
+			this.aggiungiIndividuo(new Individuo(i));
+		}
 	}
 
 	public void draw(Graphics2D g2d){
@@ -162,7 +160,8 @@ public class Ambiente {
 				//i.rimbalza(0);
 				i.getDir().x = -i.getDir().x;
 			}
-			else if(p.y-Individuo.SIZE/2 <= 0){
+
+			if(p.y-Individuo.SIZE/2 <= 0){
 				//i.rimbalza((float)Math.PI/2);
 				i.getDir().y = -i.getDir().y;
 			}
@@ -173,7 +172,7 @@ public class Ambiente {
 		}
 	}
 
-	private void checkCollisioniIndividuoSottoambiente(){
+	/*private void checkCollisioniIndividuoSottoambiente(){
 		for (Individuo i : individui) {
 			Vettore p = i.getPos();
 			for (Ambiente a : sottoambienti) {
@@ -188,10 +187,10 @@ public class Ambiente {
 				}
 			}
 		}
-	}
+	}*/
 
 	private void checkInfetto(Individuo i1, Individuo i2){ //decide se l'individuo i1 infetta l'individuo i2
-		if(i1.getStato() == Individuo.SINTOMATICO || i1.getStato() == Individuo.ASINTOMATICO && i2.getStato() == Individuo.SANO){
+		if((i1.getStato() == Individuo.SINTOMATICO || i1.getStato() == Individuo.ASINTOMATICO) && i2.getStato() == Individuo.SANO){
 			float rnd = (float) Math.random();
 			if(rnd<i1.getVirus().getInfettivita()){
 				i2.infetta(i1.getVirus());
@@ -199,20 +198,6 @@ public class Ambiente {
 		}
 	}
 
-	public boolean collisione(Vettore pos){ //restituisce true se non c'è nessun individuo in quel punto dell'ambiente, false altrimenti
-		for (Individuo individuo : individui) { //controlliamo se lo spazio è occupato da qualche altro individuo
-			if(Vettore.distanza(pos,individuo.getPos())<Individuo.SIZE/2){
-				return false;
-			}
-		}
-		for(Ambiente ambiente : sottoambienti){
-			//todo:complete
-			//if()
-		}
-		return true;
-	}
-
-	//todo: funzionerà???
 	private boolean intersecaCerchio(float x1, float y1, float x2, float y2, Vettore c, float r) { //restituisce true se il il segmento che va da (x1,y1) a (x2,y2) interseca o è tangente al cerchio di centro (x,y) e raggio r
 		Vettore a = new Vettore(x1,y1);
 		Vettore b = new Vettore(x2,y2);
@@ -251,7 +236,6 @@ public class Ambiente {
 	}
 
 	public boolean getCollassato(){
-		System.out.println("Ambiente collassato");
 		return collassato;
 	}
 
